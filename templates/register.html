@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Create Account | AI Resume Analyzer</title>
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Arial,
+            sans-serif;
+
+        background:
+            linear-gradient(
+                135deg,
+                #f8f9ff 0%,
+                #eef2ff 50%,
+                #f8f9ff 100%
+            );
+    }
+
+    .register-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 15px;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 1000px;
+        min-height: 650px;
+        background: #ffffff;
+        border-radius: 24px;
+        overflow: hidden;
+
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.10);
+    }
+
+    /* =========================================
+       LEFT BRAND PANEL
+    ========================================= */
+
+    .brand-panel {
+        background:
+            linear-gradient(
+                145deg,
+                #111827,
+                #1e293b
+            );
+
+        color: #ffffff;
+        padding: 55px 45px;
+
+        position: relative;
+        overflow: hidden;
+    }
+
+    .brand-panel::before {
+        content: "";
+
+        position: absolute;
+
+        width: 280px;
+        height: 280px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(99, 102, 241, 0.15);
+
+        top: -110px;
+        right: -90px;
+    }
+
+    .brand-panel::after {
+        content: "";
+
+        position: absolute;
+
+        width: 190px;
+        height: 190px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(139, 92, 246, 0.12);
+
+        bottom: -75px;
+        left: -55px;
+    }
+
+    .brand-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .brand-icon {
+        width: 64px;
+        height: 64px;
+
+        border-radius: 18px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background:
+            rgba(255, 255, 255, 0.12);
+
+        font-size: 30px;
+
+        margin-bottom: 25px;
+    }
+
+    .brand-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+
+        margin-bottom: 15px;
+    }
+
+    .brand-subtitle {
+        color: #cbd5e1;
+
+        font-size: 1.05rem;
+        line-height: 1.7;
+
+        max-width: 410px;
+    }
+
+    .feature-list {
+        list-style: none;
+
+        padding: 0;
+        margin-top: 40px;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        margin-bottom: 18px;
+
+        color: #e2e8f0;
+    }
+
+    .feature-list i {
+        color: #a5b4fc;
+        font-size: 20px;
+    }
+
+
+    /* =========================================
+       RIGHT REGISTER PANEL
+    ========================================= */
+
+    .register-panel {
+        padding: 50px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .register-heading {
+        font-size: 2rem;
+        font-weight: 750;
+
+        color: #111827;
+
+        margin-bottom: 8px;
+    }
+
+    .register-description {
+        color: #64748b;
+
+        margin-bottom: 30px;
+    }
+
+
+    /* =========================================
+       FORM
+    ========================================= */
+
+    .form-label {
+        font-weight: 600;
+
+        color: #334155;
+
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        height: 50px;
+
+        border-radius: 12px;
+
+        border: 1px solid #dbe1ea;
+
+        padding: 0 15px;
+
+        font-size: 15px;
+    }
+
+    .form-control:focus {
+        border-color: #6366f1;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(99, 102, 241, 0.12);
+    }
+
+
+    /* =========================================
+       PASSWORD
+    ========================================= */
+
+    .password-wrapper {
+        position: relative;
+    }
+
+    .password-wrapper .form-control {
+        padding-right: 50px;
+    }
+
+    .password-toggle {
+        position: absolute;
+
+        right: 15px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        border: none;
+
+        background: transparent;
+
+        color: #64748b;
+
+        cursor: pointer;
+
+        font-size: 18px;
+    }
+
+    .password-toggle:hover {
+        color: #4f46e5;
+    }
+
+
+    /* =========================================
+       PASSWORD REQUIREMENTS
+    ========================================= */
+
+    .password-hint {
+        font-size: 12px;
+
+        color: #94a3b8;
+
+        margin-top: 7px;
+    }
+
+
+    /* =========================================
+       REGISTER BUTTON
+    ========================================= */
+
+    .register-button {
+        width: 100%;
+
+        height: 52px;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background: #4f46e5;
+
+        color: #ffffff;
+
+        font-weight: 700;
+
+        font-size: 16px;
+
+        transition: 0.2s ease;
+    }
+
+    .register-button:hover {
+        background: #4338ca;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================================
+       DIVIDER
+    ========================================= */
+
+    .divider {
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+
+        margin: 23px 0;
+
+        color: #94a3b8;
+
+        font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: "";
+
+        flex: 1;
+
+        height: 1px;
+
+        background: #e2e8f0;
+    }
+
+
+    /* =========================================
+       LOGIN LINK
+    ========================================= */
+
+    .login-text {
+        text-align: center;
+
+        color: #64748b;
+
+        margin: 0;
+    }
+
+    .login-link {
+        color: #4f46e5;
+
+        font-weight: 700;
+
+        text-decoration: none;
+    }
+
+    .login-link:hover {
+        text-decoration: underline;
+    }
+
+
+    /* =========================================
+       FLASH MESSAGE
+    ========================================= */
+
+    .alert {
+        border-radius: 12px;
+
+        border: none;
+
+        font-size: 14px;
+    }
+
+
+    /* =========================================
+       SECURITY
+    ========================================= */
+
+    .security-note {
+        text-align: center;
+
+        margin-top: 20px;
+
+        color: #94a3b8;
+
+        font-size: 12px;
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 768px) {
+
+        .register-card {
+            min-height: auto;
+
+            border-radius: 18px;
+        }
+
+        .brand-panel {
+            padding: 35px 30px;
+        }
+
+        .brand-title {
+            font-size: 1.8rem;
+        }
+
+        .feature-list {
+            margin-top: 25px;
+        }
+
+        .register-panel {
+            padding: 40px 30px;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="register-wrapper">
+
+```
+<div class="register-card">
+
+    <div class="row g-0 h-100">
+
+
+        <!-- =========================================
+             BRAND PANEL
+        ========================================== -->
+
+        <div class="col-lg-6 brand-panel">
+
+            <div class="brand-content">
+
+                <div class="brand-icon">
+
+                    <i
+                        class="bi bi-person-plus-fill"
+                    ></i>
+
+                </div>
+
+
+                <h1 class="brand-title">
+
+                    Join AI Resume Analyzer
+
+                </h1>
+
+
+                <p class="brand-subtitle">
+
+                    Create your account and take the next
+                    step toward building a stronger,
+                    smarter and more job-ready resume.
+
+                </p>
+
+
+                <ul class="feature-list">
+
+                    <li>
+
+                        <i
+                            class="bi bi-check-circle-fill"
+                        ></i>
+
+                        <span>
+                            AI-powered resume analysis
+                        </span>
+
+                    </li>
+
+
+                    <li>
+
+                        <i
+                            class="bi bi-check-circle-fill"
+                        ></i>
+
+                        <span>
+                            ATS score & skill detection
+                        </span>
+
+                    </li>
+
+
+                    <li>
+
+                        <i
+                            class="bi bi-check-circle-fill"
+                        ></i>
+
+                        <span>
+                            Personalized job recommendations
+                        </span>
+
+                    </li>
+
+
+                    <li>
+
+                        <i
+                            class="bi bi-check-circle-fill"
+                        ></i>
+
+                        <span>
+                            Resume history & comparison
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             REGISTER PANEL
+        ========================================== -->
+
+        <div class="col-lg-6 register-panel">
+
+
+            <h2 class="register-heading">
+
+                Create Your Account
+
+            </h2>
+
+
+            <p class="register-description">
+
+                Get started with your AI-powered
+                resume journey.
+
+            </p>
+
+
+            <!-- Flash Messages -->
+
+            {% with messages = get_flashed_messages(
+                with_categories=true
+            ) %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="alert alert-info mb-4"
+                        role="alert"
+                    >
+
+                        <i
+                            class="bi bi-info-circle me-2"
+                        ></i>
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- Register Form -->
+
+            <form
+                method="POST"
+                onsubmit="return validatePasswords()"
+            >
+
+
+                <!-- Full Name -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="name"
+                        class="form-label"
+                    >
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="email"
+                        class="form-label"
+                    >
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="password"
+                        class="form-label"
+                    >
+                        Password
+                    </label>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword(
+                                'password',
+                                'passwordIcon'
+                            )"
+                            aria-label="Show password"
+                        >
+
+                            <i
+                                class="bi bi-eye"
+                                id="passwordIcon"
+                            ></i>
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="password-hint">
+
+                        Use at least 6 characters.
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Password -->
+
+                <div class="mb-4">
+
+                    <label
+                        for="confirm_password"
+                        class="form-label"
+                    >
+                        Confirm Password
+                    </label>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            class="form-control"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword(
+                                'confirm_password',
+                                'confirmPasswordIcon'
+                            )"
+                            aria-label="Show password"
+                        >
+
+                            <i
+                                class="bi bi-eye"
+                                id="confirmPasswordIcon"
+                            ></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Register Button -->
+
+                <button
+                    type="submit"
+                    class="register-button"
+                >
+
+                    <i
+                        class="bi bi-person-plus me-2"
+                    ></i>
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+
+            <!-- Divider -->
+
+            <div class="divider">
+
+                <span>OR</span>
+
+            </div>
+
+
+            <!-- Login -->
+
+            <p class="login-text">
+
+                Already have an account?
+
+                <a
+                    href="{{ url_for('auth.login') }}"
+                    class="login-link"
+                >
+                    Sign In
+                </a>
+
+            </p>
+
+
+            <!-- Security -->
+
+            <div class="security-note">
+
+                <i
+                    class="bi bi-shield-check me-1"
+                ></i>
+
+                Your account information is securely handled.
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<script>
+
+/* =========================================
+   SHOW / HIDE PASSWORD
+========================================= */
+
+function togglePassword(
+    inputId,
+    iconId
+) {
+
+    const input =
+        document.getElementById(inputId);
+
+    const icon =
+        document.getElementById(iconId);
+
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove(
+            "bi-eye"
+        );
+
+        icon.classList.add(
+            "bi-eye-slash"
+        );
+
+    } else {
+
+        input.type = "password";
+
+        icon.classList.remove(
+            "bi-eye-slash"
+        );
+
+        icon.classList.add(
+            "bi-eye"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   PASSWORD MATCH VALIDATION
+========================================= */
+
+function validatePasswords() {
+
+    const password =
+        document.getElementById(
+            "password"
+        ).value;
+
+
+    const confirmPassword =
+        document.getElementById(
+            "confirm_password"
+        ).value;
+
+
+    if (password !== confirmPassword) {
+
+        alert(
+            "Passwords do not match."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+</script>
+
+</body>
+
+</html>

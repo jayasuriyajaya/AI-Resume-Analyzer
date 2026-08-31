@@ -1,0 +1,425 @@
+{% extends "base.html" %}
+
+{% block title %}
+Resume Analysis - AI Resume Analyzer
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+```
+<!-- ================================================== -->
+<!-- Page Header -->
+<!-- ================================================== -->
+
+<div class="mb-4">
+
+    <h1 class="page-title">
+        Resume Analysis
+    </h1>
+
+    <p class="text-muted">
+        AI-powered analysis of your resume.
+    </p>
+
+    <p class="mb-0">
+        <strong>Resume:</strong>
+        {{ resume["filename"] }}
+    </p>
+
+</div>
+
+
+<!-- ================================================== -->
+<!-- Score Cards -->
+<!-- ================================================== -->
+
+<div class="row g-4">
+
+    <!-- Resume Score -->
+    <div class="col-md-4">
+
+        <div class="card shadow-sm border-0 p-4 h-100">
+
+            <h5 class="mb-3">
+                📄 Resume Score
+            </h5>
+
+            <div class="display-4 fw-bold">
+                {{ analysis["resume_score"]|round|int }}/100
+            </div>
+
+            <!-- Progress -->
+
+            <div
+                class="progress mt-3"
+                style="height: 10px;"
+            >
+
+                <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: {{ analysis['resume_score'] }}%;"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ATS Score -->
+    <div class="col-md-4">
+
+        <div class="card shadow-sm border-0 p-4 h-100">
+
+            <h5 class="mb-3">
+                🤖 ATS Score
+            </h5>
+
+            <div class="display-4 fw-bold">
+                {{ analysis["ats_score"]|round|int }}/100
+            </div>
+
+            <!-- Progress -->
+
+            <div
+                class="progress mt-3"
+                style="height: 10px;"
+            >
+
+                <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: {{ analysis['ats_score'] }}%;"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Skills Detected -->
+    <div class="col-md-4">
+
+        <div class="card shadow-sm border-0 p-4 h-100">
+
+            <h5 class="mb-3">
+                🛠️ Skills Detected
+            </h5>
+
+            <div class="display-4 fw-bold">
+                {{ analysis["total_skills"] }}
+            </div>
+
+            <p class="text-muted mb-0 mt-2">
+                Technical skills identified
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================== -->
+<!-- Detected Skills -->
+<!-- ================================================== -->
+
+<div class="card shadow-sm border-0 mt-4">
+
+    <div class="card-body p-4">
+
+        <h4 class="mb-4">
+            🛠️ Detected Skills
+        </h4>
+
+
+        {% if analysis["skills"] %}
+
+            {% for skill in analysis["skills"] %}
+
+                <span class="badge bg-primary me-2 mb-2 p-2">
+                    {{ skill["name"] }}
+                </span>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="text-muted">
+                No recognized technical skills were detected.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- ================================================== -->
+<!-- Recommended Jobs -->
+<!-- ================================================== -->
+
+<div class="card shadow-sm border-0 mt-4">
+
+    <div class="card-body p-4">
+
+        <div class="text-center mb-4">
+
+            <h3 class="fw-bold">
+                🎯 Recommended Jobs
+            </h3>
+
+            <p class="text-muted mb-0">
+                Job roles matched to the skills detected
+                in your resume.
+            </p>
+
+        </div>
+
+
+        {% if job_recommendations %}
+
+            <div class="row g-4">
+
+                {% for job in job_recommendations[:5] %}
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card border shadow-sm h-100">
+
+                            <div class="card-body p-4">
+
+                                <!-- Job Title -->
+
+                                <h4 class="fw-bold mb-3">
+                                    {{ job["job_title"] }}
+                                </h4>
+
+
+                                <!-- Description -->
+
+                                <p class="text-muted">
+
+                                    {{ job["description"] }}
+
+                                </p>
+
+
+                                <!-- Match Percentage -->
+
+                                <div class="d-flex justify-content-between mb-2">
+
+                                    <strong>
+                                        Skill Match
+                                    </strong>
+
+                                    <strong>
+                                        {{ job["match_percentage"] }}%
+                                    </strong>
+
+                                </div>
+
+
+                                <!-- Progress Bar -->
+
+                                <div
+                                    class="progress mb-4"
+                                    style="height: 10px;"
+                                >
+
+                                    <div
+                                        class="progress-bar"
+                                        role="progressbar"
+                                        style="width: {{ job['match_percentage'] }}%;"
+                                        aria-valuenow="{{ job['match_percentage'] }}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100"
+                                    >
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Match Category -->
+
+                                {% if job["match_percentage"] >= 80 %}
+
+                                    <span class="badge bg-success mb-3">
+                                        Excellent Match
+                                    </span>
+
+                                {% elif job["match_percentage"] >= 60 %}
+
+                                    <span class="badge bg-primary mb-3">
+                                        Good Match
+                                    </span>
+
+                                {% elif job["match_percentage"] >= 40 %}
+
+                                    <span class="badge bg-warning text-dark mb-3">
+                                        Moderate Match
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary mb-3">
+                                        Low Match
+                                    </span>
+
+                                {% endif %}
+
+
+                                <!-- Matched Skills -->
+
+                                <h6 class="fw-bold text-success mt-2">
+
+                                    ✓ Matched Skills
+
+                                </h6>
+
+
+                                {% if job["matched_skills"] %}
+
+                                    <div class="mb-3">
+
+                                        {% for skill in job["matched_skills"] %}
+
+                                            <span class="badge bg-success me-1 mb-1">
+
+                                                {{ skill }}
+
+                                            </span>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% else %}
+
+                                    <p class="text-muted small">
+                                        No matching skills found.
+                                    </p>
+
+                                {% endif %}
+
+
+                                <!-- Missing Skills -->
+
+                                <h6 class="fw-bold text-danger">
+
+                                    ○ Skills to Improve
+
+                                </h6>
+
+
+                                {% if job["missing_skills"] %}
+
+                                    <div>
+
+                                        {% for skill in job["missing_skills"][:5] %}
+
+                                            <span
+                                                class="badge bg-light text-dark border me-1 mb-1"
+                                            >
+
+                                                {{ skill }}
+
+                                            </span>
+
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% else %}
+
+                                    <p class="text-success small mb-0">
+
+                                        ✓ No missing skills for this role.
+
+                                    </p>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="alert alert-secondary text-center">
+
+                <h5 class="fw-bold">
+                    No Job Recommendations Available
+                </h5>
+
+                <p class="mb-0">
+
+                    Add more relevant technical skills
+                    to your resume to receive job recommendations.
+
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- ================================================== -->
+<!-- Find Matching Jobs Button -->
+<!-- ================================================== -->
+
+<div class="text-center mt-5">
+
+    <a
+        href="{{ url_for(
+            'resume.job_recommendations',
+            resume_id=resume['id']
+        ) }}"
+        class="btn btn-primary btn-lg px-5"
+    >
+        🔎 Find Matching Jobs
+    </a>
+
+</div>
+
+
+<!-- ================================================== -->
+<!-- Back to My Resumes -->
+<!-- ================================================== -->
+
+<div class="text-center mt-3">
+
+    <a
+        href="{{ url_for('resume.my_resumes') }}"
+        class="btn btn-outline-secondary"
+    >
+        ← Back to My Resumes
+    </a>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

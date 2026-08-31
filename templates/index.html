@@ -1,0 +1,1210 @@
+{% extends "base.html" %}
+
+{% block title %}
+AI Resume Analyzer | Build a Better Career
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.index-page {
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #f8f9ff 0%,
+            #eef2ff 50%,
+            #ffffff 100%
+        );
+}
+
+
+/* =========================================================
+   HERO SECTION
+========================================================= */
+
+.hero-section {
+    position: relative;
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 16px;
+
+    border-radius: 50px;
+
+    background: #eef2ff;
+    color: #4f46e5;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    margin-bottom: 25px;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.05;
+
+    font-weight: 800;
+
+    color: #111827;
+
+    letter-spacing: -2px;
+}
+
+.hero-highlight {
+    color: #4f46e5;
+}
+
+.hero-description {
+    max-width: 650px;
+
+    font-size: 1.2rem;
+    line-height: 1.8;
+
+    color: #64748b;
+
+    margin-top: 25px;
+}
+
+.hero-buttons {
+    margin-top: 35px;
+}
+
+.hero-primary-btn {
+    padding: 14px 28px;
+
+    border-radius: 12px;
+
+    background: #4f46e5;
+    border: none;
+
+    color: white;
+
+    font-weight: 700;
+    font-size: 16px;
+
+    transition: all 0.2s ease;
+}
+
+.hero-primary-btn:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.hero-secondary-btn {
+    padding: 14px 28px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   HERO DASHBOARD CARD
+========================================================= */
+
+.hero-visual {
+    position: relative;
+
+    padding: 25px;
+}
+
+.dashboard-preview {
+    background: #ffffff;
+
+    border-radius: 24px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 25px 70px rgba(15, 23, 42, 0.12);
+
+    border: 1px solid #e5e7eb;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.preview-title {
+    font-weight: 750;
+    color: #111827;
+}
+
+.preview-status {
+    font-size: 12px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #ecfdf5;
+    color: #059669;
+
+    font-weight: 700;
+}
+
+.score-card {
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f5f3ff
+        );
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+.score-number {
+    font-size: 3.5rem;
+
+    font-weight: 800;
+
+    color: #4f46e5;
+
+    line-height: 1;
+}
+
+.score-label {
+    color: #64748b;
+
+    font-size: 14px;
+
+    margin-top: 8px;
+}
+
+.preview-stat {
+    background: #f8fafc;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    height: 100%;
+}
+
+.preview-stat-number {
+    font-size: 1.5rem;
+
+    font-weight: 800;
+
+    color: #111827;
+}
+
+.preview-stat-label {
+    font-size: 12px;
+
+    color: #64748b;
+}
+
+
+/* =========================================================
+   FLOATING ELEMENTS
+========================================================= */
+
+.floating-card {
+    position: absolute;
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 14px 18px;
+
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, 0.12);
+
+    z-index: 3;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.floating-card.skills {
+    left: -10px;
+    bottom: 70px;
+}
+
+.floating-card.jobs {
+    right: -15px;
+    top: 80px;
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.features-section {
+    padding: 100px 0;
+
+    background: #ffffff;
+}
+
+.section-badge {
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    border-radius: 50px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-size: 2.7rem;
+
+    font-weight: 800;
+
+    color: #111827;
+
+    margin-bottom: 15px;
+}
+
+.section-description {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: #64748b;
+
+    font-size: 1.05rem;
+
+    line-height: 1.7;
+}
+
+.feature-card {
+    height: 100%;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 20px;
+
+    transition: all 0.25s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 20px 45px rgba(15, 23, 42, 0.08);
+
+    border-color: #c7d2fe;
+}
+
+.feature-icon {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-size: 25px;
+
+    margin-bottom: 20px;
+}
+
+.feature-title {
+    font-size: 1.2rem;
+
+    font-weight: 750;
+
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.feature-description {
+    color: #64748b;
+
+    line-height: 1.7;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.how-section {
+    padding: 100px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8f9ff,
+            #eef2ff
+        );
+}
+
+.step-card {
+    text-align: center;
+
+    padding: 25px;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 20px;
+
+    background: #4f46e5;
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+.step-title {
+    font-weight: 750;
+
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.step-description {
+    color: #64748b;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta-section {
+    padding: 100px 0;
+}
+
+.cta-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    padding: 70px 40px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111827,
+            #1e293b
+        );
+
+    color: white;
+
+    box-shadow:
+        0 25px 60px rgba(15, 23, 42, 0.15);
+}
+
+.cta-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: rgba(99, 102, 241, 0.15);
+
+    top: -150px;
+    right: -80px;
+}
+
+.cta-card-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-title {
+    font-size: 2.6rem;
+
+    font-weight: 800;
+
+    margin-bottom: 15px;
+}
+
+.cta-description {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: #cbd5e1;
+
+    line-height: 1.7;
+}
+
+.cta-button {
+    display: inline-block;
+
+    margin-top: 30px;
+
+    padding: 14px 30px;
+
+    border-radius: 12px;
+
+    background: white;
+
+    color: #4f46e5;
+
+    font-weight: 750;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+
+    color: #4338ca;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .hero-section {
+        padding: 60px 0;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+    }
+
+    .hero-visual {
+        margin-top: 50px;
+    }
+
+    .floating-card.skills {
+        left: 0;
+    }
+
+    .floating-card.jobs {
+        right: 0;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .hero-section {
+        min-height: auto;
+
+        padding: 45px 0;
+    }
+
+    .hero-title {
+        font-size: 2.8rem;
+
+        letter-spacing: -1px;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+
+        margin-bottom: 12px;
+    }
+
+    .dashboard-preview {
+        padding: 18px;
+    }
+
+    .floating-card {
+        display: none;
+    }
+
+    .features-section,
+    .how-section,
+    .cta-section {
+        padding: 70px 0;
+    }
+
+    .section-title,
+    .cta-title {
+        font-size: 2rem;
+    }
+
+}
+
+</style>
+
+<div class="index-page">
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero-section">
+
+```
+<div class="container">
+
+    <div class="row align-items-center">
+
+
+        <!-- HERO CONTENT -->
+
+        <div class="col-lg-7 hero-content">
+
+            <div class="hero-badge">
+
+                <i class="bi bi-stars"></i>
+
+                AI-Powered Career Platform
+
+            </div>
+
+
+            <h1 class="hero-title">
+
+                Build a Resume
+
+                <br>
+
+                <span class="hero-highlight">
+                    That Gets Noticed.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Analyze your resume with AI, discover your
+                strengths, improve your ATS score, identify
+                skill gaps and find job opportunities that
+                match your profile.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="{{ url_for('auth.register') }}"
+                    class="btn hero-primary-btn me-2"
+                >
+
+                    <i class="bi bi-rocket-takeoff me-2"></i>
+
+                    Get Started Free
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('auth.login') }}"
+                    class="btn btn-outline-dark hero-secondary-btn"
+                >
+
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                    Login
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO VISUAL -->
+
+        <div class="col-lg-5">
+
+            <div class="hero-visual">
+
+
+                <div class="dashboard-preview">
+
+
+                    <div class="preview-header">
+
+                        <span class="preview-title">
+
+                            Resume Analysis
+
+                        </span>
+
+                        <span class="preview-status">
+
+                            <i class="bi bi-check-circle me-1"></i>
+
+                            Analyzed
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- Score -->
+
+                    <div class="score-card">
+
+                        <div class="score-number">
+                            87
+                        </div>
+
+                        <div class="score-label">
+                            Resume Score
+                        </div>
+
+                    </div>
+
+
+                    <!-- Stats -->
+
+                    <div class="row g-3">
+
+                        <div class="col-6">
+
+                            <div class="preview-stat">
+
+                                <div class="preview-stat-number">
+                                    92
+                                </div>
+
+                                <div class="preview-stat-label">
+                                    ATS Score
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <div class="preview-stat">
+
+                                <div class="preview-stat-number">
+                                    18
+                                </div>
+
+                                <div class="preview-stat-label">
+                                    Skills Found
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <div class="preview-stat">
+
+                                <div class="preview-stat-number">
+                                    12
+                                </div>
+
+                                <div class="preview-stat-label">
+                                    Job Matches
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <div class="preview-stat">
+
+                                <div class="preview-stat-number">
+                                    94%
+                                </div>
+
+                                <div class="preview-stat-label">
+                                    Profile Match
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Floating Cards -->
+
+                <div class="floating-card skills">
+
+                    <i class="bi bi-lightning-charge-fill me-1"></i>
+
+                    Skills Detected
+
+                </div>
+
+
+                <div class="floating-card jobs">
+
+                    <i class="bi bi-briefcase-fill me-1"></i>
+
+                    Job Match 94%
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =========================================================
+     FEATURES
+========================================================= -->
+
+<section class="features-section">
+
+```
+<div class="container">
+
+
+    <div class="text-center mb-5">
+
+        <span class="section-badge">
+            Powerful Features
+        </span>
+
+        <h2 class="section-title">
+            Everything You Need to Improve Your Career
+        </h2>
+
+        <p class="section-description">
+
+            Get actionable insights from your resume and
+            discover opportunities that align with your
+            skills and career goals.
+
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <!-- Feature 1 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="bi bi-file-earmark-text"></i>
+
+                </div>
+
+                <h3 class="feature-title">
+                    AI Resume Analysis
+                </h3>
+
+                <p class="feature-description">
+
+                    Analyze your resume and receive an
+                    overall resume score with useful insights.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Feature 2 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="bi bi-bar-chart-line"></i>
+
+                </div>
+
+                <h3 class="feature-title">
+                    ATS Compatibility
+                </h3>
+
+                <p class="feature-description">
+
+                    Understand how well your resume performs
+                    against Applicant Tracking Systems.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Feature 3 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+
+                <h3 class="feature-title">
+                    Skill Detection
+                </h3>
+
+                <p class="feature-description">
+
+                    Automatically identify technical skills
+                    present in your resume.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Feature 4 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="bi bi-briefcase"></i>
+
+                </div>
+
+                <h3 class="feature-title">
+                    Job Recommendations
+                </h3>
+
+                <p class="feature-description">
+
+                    Discover job roles that match your
+                    existing skills and experience.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Feature 5 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="bi bi-diagram-3"></i>
+
+                </div>
+
+                <h3 class="feature-title">
+                    Skill Gap Analysis
+                </h3>
+
+                <p class="feature-description">
+
+                    Identify missing skills and understand
+                    what you can learn to improve your profile.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Feature 6 -->
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
+                    <i class="bi bi-clock-history"></i>
+
+                </div>
+
+                <h3 class="feature-title">
+                    Resume History
+                </h3>
+
+                <p class="feature-description">
+
+                    Track your resume versions and compare
+                    previous analyses as your profile improves.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+
+<section class="how-section">
+
+```
+<div class="container">
+
+
+    <div class="text-center mb-5">
+
+        <span class="section-badge">
+            Simple Process
+        </span>
+
+        <h2 class="section-title">
+            How It Works
+        </h2>
+
+        <p class="section-description">
+
+            Improve your resume in just a few simple steps.
+
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <div class="col-md-4">
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <h3 class="step-title">
+                    Upload Your Resume
+                </h3>
+
+                <p class="step-description">
+
+                    Upload your resume and let our system
+                    extract your professional information.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <h3 class="step-title">
+                    Get AI Analysis
+                </h3>
+
+                <p class="step-description">
+
+                    Receive your resume score, ATS score,
+                    detected skills and improvement insights.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <h3 class="step-title">
+                    Discover Opportunities
+                </h3>
+
+                <p class="step-description">
+
+                    Explore recommended job roles and
+                    identify the skills you need to improve.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- =========================================================
+     FINAL CTA
+========================================================= -->
+
+<section class="cta-section">
+
+```
+<div class="container">
+
+    <div class="cta-card">
+
+        <div class="cta-card-content">
+
+            <h2 class="cta-title">
+
+                Ready to Improve Your Resume?
+
+            </h2>
+
+            <p class="cta-description">
+
+                Start analyzing your resume today and
+                discover how you can become more
+                job-ready.
+
+            </p>
+
+
+            <a
+                href="{{ url_for('auth.register') }}"
+                class="cta-button"
+            >
+
+                <i class="bi bi-rocket-takeoff me-2"></i>
+
+                Analyze My Resume
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+</div>
+
+{% endblock %}

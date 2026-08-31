@@ -1,0 +1,27 @@
+body {
+    background-color: #f5f7fb;
+    font-family: Arial, sans-serif;
+}
+
+.navbar-brand {
+    letter-spacing: 0.3px;
+}
+
+.dashboard-card {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.page-title {
+    font-weight: 700;
+}

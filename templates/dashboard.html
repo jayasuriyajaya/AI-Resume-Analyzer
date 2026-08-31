@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+
+{% block title %}
+Career Dashboard - AI Resume Analyzer
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Header -->
+
+    <div class="mb-5">
+
+        <h1 class="fw-bold">
+            Career Dashboard
+        </h1>
+
+        <p class="text-muted">
+            Analyze your resume, discover relevant jobs,
+            and identify skills to develop.
+        </p>
+
+    </div>
+
+
+    {% if latest_analysis %}
+
+    <!-- Statistics -->
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h6 class="text-muted">
+                        Resume Score
+                    </h6>
+
+                    <div class="display-5 fw-bold">
+
+                        {{ latest_analysis["resume_score"]
+                           |round|int }}/100
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h6 class="text-muted">
+                        ATS Score
+                    </h6>
+
+                    <div class="display-5 fw-bold">
+
+                        {{ latest_analysis["ats_score"]
+                           |round|int }}/100
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h6 class="text-muted">
+                        Skills Detected
+                    </h6>
+
+                    <div class="display-5 fw-bold">
+
+                        {{ latest_analysis["total_skills"] }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card border-0 shadow-sm mb-5">
+
+    <div class="card-body p-4">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-5">
+
+                <h3 class="fw-bold">
+                    🎯 Career Readiness
+                </h3>
+
+                <p class="text-muted">
+                    Your overall readiness based on
+                    resume quality, ATS compatibility,
+                    skills, and job matching.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-7">
+
+                <div class="d-flex
+                            align-items-center
+                            gap-3">
+
+                    <div class="progress flex-grow-1"
+                         style="height: 20px;">
+
+                        <div
+                            class="progress-bar"
+                            role="progressbar"
+                            style="width:
+                                {{ career_readiness }}%;"
+                        >
+                        </div>
+
+                    </div>
+
+                    <strong class="fs-4">
+
+                        {{ "%.0f"|format(
+                            career_readiness
+                        ) }}%
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <hr class="my-4">
+
+
+        <div class="row text-center">
+
+            <div class="col-md-4">
+
+                <h6 class="text-muted">
+                    Skill Coverage
+                </h6>
+
+                <h4 class="fw-bold">
+
+                    {{ "%.0f"|format(
+                        skill_coverage
+                    ) }}%
+
+                </h4>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <h6 class="text-muted">
+                    Best Job Match
+                </h6>
+
+                <h4 class="fw-bold">
+
+                    {{ "%.0f"|format(
+                        best_job_match
+                    ) }}%
+
+                </h4>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <h6 class="text-muted">
+                    Skills Detected
+                </h6>
+
+                <h4 class="fw-bold">
+
+                    {{ latest_analysis[
+                        "total_skills"
+                    ] }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- Job Recommendations -->
+
+    <div class="card border-0 shadow-sm mb-5">
+
+        <div class="card-body p-4">
+
+            <div class="d-flex justify-content-between
+                        align-items-center mb-4">
+
+                <div>
+
+                    <h3 class="fw-bold mb-1">
+                        🎯 Top Job Matches
+                    </h3>
+
+                    <p class="text-muted mb-0">
+                        Jobs ranked according to your resume.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{{ url_for(
+                        'resume.job_recommendations',
+                        resume_id=latest_resume['id']
+                    ) }}"
+                    class="btn btn-primary"
+                >
+                    View All
+                </a>
+
+            </div>
+
+
+            {% if recommendations %}
+
+                {% for job in recommendations %}
+
+                <div class="border rounded p-3 mb-3">
+
+                    <div class="row align-items-center">
+
+                        <div class="col-md-7">
+
+                            <h5 class="fw-bold mb-1">
+                                {{ job["job_title"] }}
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                {{ job["company"] }}
+                                ·
+                                {{ job["location"] }}
+                                .
+                                {{ job["description"] }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="col-md-5">
+
+                            <div class="d-flex
+                                        align-items-center
+                                        gap-3">
+
+                                <div class="progress flex-grow-1"
+                                     style="height: 10px;">
+
+                                    <div
+                                        class="progress-bar"
+                                        role="progressbar"
+                                        style="width:
+                                            {{ job['match_percentage'] }}%;"
+                                    >
+                                    </div>
+
+                                </div>
+
+                                <strong>
+                                    {{ "%.0f"|format(
+                                        job["match_percentage"]
+                                    ) }}%
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="alert alert-info">
+
+                    Upload a resume to receive job
+                    recommendations.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Resume Actions -->
+
+    <div class="row g-4">
+
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold">
+                        📄 Latest Resume
+                    </h4>
+
+                    <p class="text-muted">
+                        {{ latest_resume["filename"] }}
+                    </p>
+
+                    <a
+                        href="{{ url_for(
+                            'resume.job_recommendations',
+                            resume_id=latest_resume['id']
+                        ) }}"
+                        class="btn btn-outline-primary"
+                    >
+                        Explore Career Options
+                    </a>
+
+                    <a
+                        href="{{ url_for(
+                            'resume.resume_improvements',
+                            resume_id=latest_resume['id']
+                        ) }}"
+                        class="btn btn-primary"
+                    >
+                        🤖 Get AI Improvements
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold">
+                        🚀 Improve Your Resume
+                    </h4>
+
+                    <p class="text-muted">
+                        Review your ATS score and identify
+                        skills that can improve your career
+                        opportunities.
+                    </p>
+
+                    <a
+                        href="{{ url_for(
+                            'resume.my_resumes'
+                        ) }}"
+                        class="btn btn-outline-primary"
+                    >
+                        View Resume Analysis
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% else %}
+
+    <!-- Empty Dashboard -->
+
+    <div class="card border-0 shadow-sm text-center">
+
+        <div class="card-body py-5">
+
+            <h2 class="fw-bold">
+                🚀 Start Your Career Analysis
+            </h2>
+
+            <p class="text-muted mb-4">
+
+                Upload your resume to analyze your skills,
+                calculate your ATS score, and discover
+                matching jobs.
+
+            </p>
+
+            <a
+                href="{{ url_for(
+                    'resume.upload_resume'
+                ) }}"
+                class="btn btn-primary btn-lg px-5"
+            >
+                Upload Resume
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

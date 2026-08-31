@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block title %}
+Resume History
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            📄 Resume History
+        </h1>
+
+        <p class="text-muted">
+            Track and compare your resume versions over time.
+        </p>
+
+    </div>
+
+
+    {% if versions %}
+
+    <form
+        method="GET"
+        id="compareForm"
+    >
+
+        {% for version in versions %}
+
+        <div class="card border-0 shadow-sm mb-3">
+
+            <div class="card-body p-4">
+
+                <div class="row align-items-center">
+
+
+                    <!-- Selection -->
+
+                    <div class="col-md-1 text-center">
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input version-checkbox"
+                            name="versions"
+                            value="{{ version['id'] }}"
+                            style="transform: scale(1.4);"
+                        >
+
+                    </div>
+
+
+                    <!-- Version -->
+
+                    <div class="col-md-3">
+
+                        <h4 class="fw-bold mb-1">
+
+                            Version
+                            {{ version["version_number"] }}
+
+                        </h4>
+
+                        <p class="text-muted mb-0">
+
+                            {{ version["filename"] }}
+
+                        </p>
+
+                    </div>
+
+
+                    <!-- Resume Score -->
+
+                    <div class="col-md-2">
+
+                        <small class="text-muted">
+                            Resume Score
+                        </small>
+
+                        <h5 class="fw-bold mb-0">
+
+                            {{ "%.0f"|format(
+                                version["resume_score"]
+                            ) }}/100
+
+                        </h5>
+
+                    </div>
+
+
+                    <!-- ATS -->
+
+                    <div class="col-md-2">
+
+                        <small class="text-muted">
+                            ATS Score
+                        </small>
+
+                        <h5 class="fw-bold mb-0">
+
+                            {{ "%.0f"|format(
+                                version["ats_score"]
+                            ) }}/100
+
+                        </h5>
+
+                    </div>
+
+
+                    <!-- Skills -->
+
+                    <div class="col-md-2">
+
+                        <small class="text-muted">
+                            Skills
+                        </small>
+
+                        <h5 class="fw-bold mb-0">
+
+                            {{ version["total_skills"] }}
+
+                        </h5>
+
+                    </div>
+
+
+                    <!-- Date -->
+
+                    <div class="col-md-2">
+
+                        <small class="text-muted">
+                            Uploaded
+                        </small>
+
+                        <p class="mb-0">
+
+                            {{ version["uploaded_at"] }}
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+        <!-- Compare Button -->
+
+        <div class="text-center mt-4">
+
+            <button
+                type="button"
+                class="btn btn-dark btn-lg px-5"
+                onclick="compareVersions()"
+            >
+                🔍 Compare Selected
+            </button>
+
+        </div>
+
+    </form>
+
+
+    {% else %}
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body text-center py-5">
+
+            <h3>
+                No Resume Versions Yet
+            </h3>
+
+            <p class="text-muted">
+
+                Upload and analyze your resume
+                to start tracking improvements.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<script>
+
+function compareVersions() {
+
+    const selected = document.querySelectorAll(
+        ".version-checkbox:checked"
+    );
+
+
+    if (selected.length !== 2) {
+
+        alert(
+            "Please select exactly TWO resume versions to compare."
+        );
+
+        return;
+
+    }
+
+
+    const version1 = selected[0].value;
+
+    const version2 = selected[1].value;
+
+
+    window.location.href =
+        "/resume-compare/"
+        + version1
+        + "/"
+        + version2;
+
+}
+
+</script>
+
+
+{% endblock %}

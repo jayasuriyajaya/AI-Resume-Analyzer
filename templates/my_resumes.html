@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Resumes - AI Resume Analyzer
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="page-title">
+                My Resumes
+            </h1>
+
+            <p class="text-muted">
+                Manage your uploaded resumes.
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('resume.upload_resume') }}"
+            class="btn btn-primary"
+        >
+            Upload New Resume
+        </a>
+
+    </div>
+
+
+    {% if resumes %}
+
+        <div class="card shadow-sm border-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>Filename</th>
+                            <th>Uploaded</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for resume in resumes %}
+
+                            <tr>
+
+                                <td>
+                                    {{ resume["filename"] }}
+                                </td>
+
+                                <td>
+                                    {{ resume["uploaded_at"] }}
+                                </td>
+
+                                <td>
+                                    <a
+                                        href="{{ url_for('resume.resume_analysis', resume_id=resume['id']) }}"
+                                        class="btn btn-sm btn-primary"
+                                    >
+                                        View Analysis
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body text-center p-5">
+
+                <h4>
+                    No resumes uploaded yet
+                </h4>
+
+                <p class="text-muted">
+                    Upload your resume to start the AI analysis.
+                </p>
+
+                <a
+                    href="{{ url_for('resume.upload_resume') }}"
+                    class="btn btn-primary"
+                >
+                    Upload Resume
+                </a>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

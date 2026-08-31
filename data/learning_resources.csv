@@ -1,0 +1,36 @@
+resource_id,skill,title,platform,level,type,url
+1,Docker,Docker for Beginners,Docker,Beginner,Documentation,https://docs.docker.com/get-started/
+2,AWS,AWS Cloud Practitioner Essentials,AWS,Beginner,Course,https://aws.amazon.com/training/
+3,Django,Django Getting Started,Django,Beginner,Documentation,https://docs.djangoproject.com/en/stable/intro/
+4,Python,Python Official Tutorial,Python,Beginner,Documentation,https://docs.python.org/3/tutorial/
+5,Flask,Flask Quickstart,Flask,Beginner,Documentation,https://flask.palletsprojects.com/en/stable/quickstart/
+6,MySQL,MySQL Tutorial,MySQL,Beginner,Documentation,https://dev.mysql.com/doc/mysql-tutorial-excerpt/8.0/en/
+7,Git,Git Documentation,Git,Beginner,Documentation,https://git-scm.com/doc
+8,GitHub,GitHub Skills,GitHub,Beginner,Course,https://skills.github.com/
+9,JavaScript,JavaScript Guide,MDN,Beginner,Documentation,https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide
+10,React,React Learn,React,Beginner,Course,https://react.dev/learn
+11,Node.js,Node.js Learn,Node.js,Beginner,Documentation,https://nodejs.org/en/learn
+12,Pandas,Pandas Getting Started,Pandas,Beginner,Documentation,https://pandas.pydata.org/docs/getting_started/
+13,NumPy,NumPy User Guide,NumPy,Beginner,Documentation,https://numpy.org/doc/stable/user/
+14,Scikit-learn,Scikit-learn Getting Started,Scikit-learn,Beginner,Documentation,https://scikit-learn.org/stable/getting_started.html
+15,Machine Learning,Machine Learning Guide,Google,Beginner,Course,https://developers.google.com/machine-learning
+16,TensorFlow,TensorFlow Tutorials,TensorFlow,Beginner,Course,https://www.tensorflow.org/tutorials
+17,PyTorch,PyTorch Tutorials,PyTorch,Beginner,Course,https://docs.pytorch.org/tutorials/
+18,NLP,NLP Course,Hugging Face,Intermediate,Course,https://huggingface.co/learn/nlp-course/
+19,spaCy,spaCy Course,spaCy,Intermediate,Course,https://course.spacy.io/
+20,Linux,Linux Command Line Basics,Linux,Beginner,Documentation,https://www.linux.org/
+21,Kubernetes,Kubernetes Basics,Kubernetes,Intermediate,Documentation,https://kubernetes.io/docs/tutorials/
+22,Jenkins,Jenkins User Documentation,Jenkins,Intermediate,Documentation,https://www.jenkins.io/doc/
+23,PostgreSQL,PostgreSQL Tutorial,PostgreSQL,Beginner,Documentation,https://www.postgresql.org/docs/
+24,MongoDB,MongoDB University,MongoDB,Beginner,Course,https://learn.mongodb.com/
+25,Power BI,Power BI Learning,Microsoft,Beginner,Course,https://learn.microsoft.com/en-us/training/powerplatform/power-bi/
+26,REST API,REST API Design Guide,MDN,Beginner,Documentation,https://developer.mozilla.org/
+27,SQL,SQL Tutorial,W3Schools,Beginner,Course,https://www.w3schools.com/sql/
+28,Excel,Excel Training,Microsoft,Beginner,Course,https://support.microsoft.com/
+29,Java,Java Tutorials,Oracle,Beginner,Documentation,https://docs.oracle.com/javase/tutorial/
+30,C++,Learn C++,LearnCpp,Beginner,Course,https://www.learncpp.com/
+31,HTML,HTML Introduction,MDN,Beginner,Documentation,https://developer.mozilla.org/en-US/docs/Learn/HTML
+32,CSS,CSS Introduction,MDN,Beginner,Documentation,https://developer.mozilla.org/en-US/docs/Learn/CSS
+33,SQL,SQL Learning Path,Microsoft,Beginner,Course,https://learn.microsoft.com/
+34,Statistics,Statistics Fundamentals,Khan Academy,Beginner,Course,https://www.khanacademy.org/math/statistics-probability
+35,Data Structures,Data Structures Tutorial,GeeksforGeeks,Beginner,Course,https://www.geeksforgeeks.org/data-structures/

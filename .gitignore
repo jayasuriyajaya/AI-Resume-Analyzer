@@ -1,0 +1,38 @@
+# Virtual environment
+
+venv/
+env/
+
+# Environment variables and secrets
+
+.env
+
+# Python cache
+
+**pycache**/
+*.py[cod]
+
+# VS Code
+
+.vscode/
+
+# Uploaded resumes
+
+uploads/*
+
+# Keep uploads folder
+
+!uploads/.gitkeep
+
+# Database
+
+database/database.db
+
+# Root-level unused database
+
+database.db
+
+# OS files
+
+.DS_Store
+Thumbs.db

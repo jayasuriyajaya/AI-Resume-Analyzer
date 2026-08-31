@@ -1,0 +1,909 @@
+{% extends "base.html" %}
+
+{% block title %}
+Resume Comparison
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Header -->
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            📊 Resume Version Comparison
+        </h1>
+
+        <p class="text-muted">
+            See how your resume has changed and improved over time.
+        </p>
+
+    </div>
+
+
+    <!-- Version Cards -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- Old Version -->
+
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-secondary fs-6">
+
+                            Previous Version
+
+                        </span>
+
+                    </div>
+
+
+                    <h2 class="fw-bold">
+
+                        Version
+                        {{ old_version["version_number"] }}
+
+                    </h2>
+
+
+                    <p class="text-muted">
+
+                        {{ old_version["filename"] }}
+
+                    </p>
+
+
+                    <small class="text-muted">
+
+                        Uploaded:
+                        {{ old_version["uploaded_at"] }}
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- New Version -->
+
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-success fs-6">
+
+                            Latest Version
+
+                        </span>
+
+                    </div>
+
+
+                    <h2 class="fw-bold">
+
+                        Version
+                        {{ new_version["version_number"] }}
+
+                    </h2>
+
+
+                    <p class="text-muted">
+
+                        {{ new_version["filename"] }}
+
+                    </p>
+
+
+                    <small class="text-muted">
+
+                        Uploaded:
+                        {{ new_version["uploaded_at"] }}
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Score Cards -->
+
+    <div class="row g-4 mb-5">
+
+
+        <!-- Resume Score -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <h6 class="text-muted">
+                        Resume Score
+                    </h6>
+
+
+                    <div class="row align-items-center mt-3">
+
+                        <div class="col-5">
+
+                            <h2 class="fw-bold">
+
+                                {{ "%.0f"|format(
+                                    old_version["resume_score"]
+                                ) }}
+
+                            </h2>
+
+                            <small class="text-muted">
+                                Previous
+                            </small>
+
+                        </div>
+
+
+                        <div class="col-2">
+
+                            <strong>
+                                →
+                            </strong>
+
+                        </div>
+
+
+                        <div class="col-5">
+
+                            <h2 class="fw-bold">
+
+                                {{ "%.0f"|format(
+                                    new_version["resume_score"]
+                                ) }}
+
+                            </h2>
+
+                            <small class="text-muted">
+                                Latest
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    {% if score_difference > 0 %}
+
+                        <div class="text-success fw-bold">
+
+                            ↑ +{{ score_difference }} points
+
+                        </div>
+
+                    {% elif score_difference < 0 %}
+
+                        <div class="text-danger fw-bold">
+
+                            ↓ {{ score_difference }} points
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="text-muted fw-bold">
+
+                            No Change
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ATS Score -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <h6 class="text-muted">
+                        ATS Score
+                    </h6>
+
+
+                    <div class="row align-items-center mt-3">
+
+                        <div class="col-5">
+
+                            <h2 class="fw-bold">
+
+                                {{ "%.0f"|format(
+                                    old_version["ats_score"]
+                                ) }}
+
+                            </h2>
+
+                            <small class="text-muted">
+                                Previous
+                            </small>
+
+                        </div>
+
+
+                        <div class="col-2">
+
+                            <strong>
+                                →
+                            </strong>
+
+                        </div>
+
+
+                        <div class="col-5">
+
+                            <h2 class="fw-bold">
+
+                                {{ "%.0f"|format(
+                                    new_version["ats_score"]
+                                ) }}
+
+                            </h2>
+
+                            <small class="text-muted">
+                                Latest
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    {% if ats_difference > 0 %}
+
+                        <div class="text-success fw-bold">
+
+                            ↑ +{{ ats_difference }} points
+
+                        </div>
+
+                    {% elif ats_difference < 0 %}
+
+                        <div class="text-danger fw-bold">
+
+                            ↓ {{ ats_difference }} points
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="text-muted fw-bold">
+
+                            No Change
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Skills -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <h6 class="text-muted">
+                        Detected Skills
+                    </h6>
+
+
+                    <div class="row align-items-center mt-3">
+
+                        <div class="col-5">
+
+                            <h2 class="fw-bold">
+
+                                {{ old_version["total_skills"] }}
+
+                            </h2>
+
+                            <small class="text-muted">
+                                Previous
+                            </small>
+
+                        </div>
+
+
+                        <div class="col-2">
+
+                            <strong>
+                                →
+                            </strong>
+
+                        </div>
+
+
+                        <div class="col-5">
+
+                            <h2 class="fw-bold">
+
+                                {{ new_version["total_skills"] }}
+
+                            </h2>
+
+                            <small class="text-muted">
+                                Latest
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    {% if skills_difference > 0 %}
+
+                        <div class="text-success fw-bold">
+
+                            ↑ +{{ skills_difference }} skills
+
+                        </div>
+
+                    {% elif skills_difference < 0 %}
+
+                        <div class="text-danger fw-bold">
+
+                            ↓ {{ skills_difference }} skills
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="text-muted fw-bold">
+
+                            No Change
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Detailed Comparison -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body p-4">
+
+            <h3 class="fw-bold mb-4">
+
+                📋 Detailed Comparison
+
+            </h3>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Metric
+                            </th>
+
+                            <th>
+                                Version
+                                {{ old_version["version_number"] }}
+                            </th>
+
+                            <th>
+                                Version
+                                {{ new_version["version_number"] }}
+                            </th>
+
+                            <th>
+                                Improvement
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                Resume Score
+                            </td>
+
+                            <td>
+
+                                {{ old_version["resume_score"] }}/100
+
+                            </td>
+
+                            <td>
+
+                                {{ new_version["resume_score"] }}/100
+
+                            </td>
+
+                            <td>
+
+                                {% if score_difference > 0 %}
+
+                                    <span class="badge bg-success">
+
+                                        +{{ score_difference }}
+
+                                    </span>
+
+                                {% elif score_difference < 0 %}
+
+                                    <span class="badge bg-danger">
+
+                                        {{ score_difference }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+
+                                        0
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                ATS Score
+                            </td>
+
+                            <td>
+
+                                {{ old_version["ats_score"] }}/100
+
+                            </td>
+
+                            <td>
+
+                                {{ new_version["ats_score"] }}/100
+
+                            </td>
+
+                            <td>
+
+                                {% if ats_difference > 0 %}
+
+                                    <span class="badge bg-success">
+
+                                        +{{ ats_difference }}
+
+                                    </span>
+
+                                {% elif ats_difference < 0 %}
+
+                                    <span class="badge bg-danger">
+
+                                        {{ ats_difference }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+
+                                        0
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Detected Skills
+                            </td>
+
+                            <td>
+
+                                {{ old_version["total_skills"] }}
+
+                            </td>
+
+                            <td>
+
+                                {{ new_version["total_skills"] }}
+
+                            </td>
+
+                            <td>
+
+                                {% if skills_difference > 0 %}
+
+                                    <span class="badge bg-success">
+
+                                        +{{ skills_difference }}
+
+                                    </span>
+
+                                {% elif skills_difference < 0 %}
+
+                                    <span class="badge bg-danger">
+
+                                        {{ skills_difference }}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-secondary">
+
+                                        0
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <!-- Skill Comparison -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body p-4">
+
+            <h3 class="fw-bold mb-4">
+                🛠️ Skill Comparison
+            </h3>
+
+
+            <div class="row g-4">
+
+
+                <!-- Skills Added -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-4 h-100">
+
+                        <h5 class="fw-bold text-success">
+                            📈 Skills Added
+                        </h5>
+
+
+                        {% if skills_added %}
+
+                            <ul class="list-group list-group-flush mt-3">
+
+                                {% for skill in skills_added %}
+
+                                    <li class="list-group-item px-0">
+
+                                        <span class="text-success">
+                                            + {{ skill }}
+                                        </span>
+
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+
+                        {% else %}
+
+                            <p class="text-muted mt-3 mb-0">
+                                No new skills added.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Skills Removed -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-4 h-100">
+
+                        <h5 class="fw-bold text-danger">
+                            📉 Skills Removed
+                        </h5>
+
+
+                        {% if skills_removed %}
+
+                            <ul class="list-group list-group-flush mt-3">
+
+                                {% for skill in skills_removed %}
+
+                                    <li class="list-group-item px-0">
+
+                                        <span class="text-danger">
+                                            - {{ skill }}
+                                        </span>
+
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+
+                        {% else %}
+
+                            <p class="text-muted mt-3 mb-0">
+                                No skills removed.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Skills Retained -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded p-4 h-100">
+
+                        <h5 class="fw-bold text-primary">
+                            ✓ Skills Retained
+                        </h5>
+
+
+                        {% if skills_retained %}
+
+                            <ul class="list-group list-group-flush mt-3">
+
+                                {% for skill in skills_retained %}
+
+                                    <li class="list-group-item px-0">
+
+                                        <span>
+                                            ✓ {{ skill }}
+                                        </span>
+
+                                    </li>
+
+                                {% endfor %}
+
+                            </ul>
+
+                        {% else %}
+
+                            <p class="text-muted mt-3 mb-0">
+                                No common skills.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Improvement Summary -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body p-4">
+
+            <h3 class="fw-bold">
+
+                🧠 Improvement Summary
+
+            </h3>
+
+
+            {% if score_difference > 0
+               or ats_difference > 0
+               or skills_difference > 0 %}
+
+
+                <div class="alert alert-success mt-4">
+
+                    <h5 class="fw-bold">
+
+                        🎉 Your resume has improved!
+
+                    </h5>
+
+
+                    <p class="mb-0">
+
+                        Compared with Version
+                        {{ old_version["version_number"] }},
+                        your latest resume shows measurable
+                        improvements.
+
+                    </p>
+
+                </div>
+
+
+                <ul class="mt-4">
+
+                    {% if score_difference > 0 %}
+
+                        <li class="mb-2">
+
+                            Resume score increased by
+                            <strong>
+                                {{ score_difference }}
+                            </strong>
+                            points.
+
+                        </li>
+
+                    {% endif %}
+
+
+                    {% if ats_difference > 0 %}
+
+                        <li class="mb-2">
+
+                            ATS score increased by
+                            <strong>
+                                {{ ats_difference }}
+                            </strong>
+                            points.
+
+                        </li>
+
+                    {% endif %}
+
+
+                    {% if skills_difference > 0 %}
+
+                        <li class="mb-2">
+
+                            You added
+                            <strong>
+                                {{ skills_difference }}
+                            </strong>
+                            detected skills.
+
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+
+
+            {% else %}
+
+                <div class="alert alert-secondary mt-4">
+
+                    No measurable improvement was detected
+                    between these two resume versions.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Buttons -->
+
+    <div class="text-center">
+
+        <a
+            href="{{ url_for('resume.resume_history') }}"
+            class="btn btn-dark me-2"
+        >
+            ← Resume History
+        </a>
+
+
+        <a
+            href="{{ url_for('resume.resume_compare',
+                             version1=new_version['id'],
+                             version2=old_version['id']) }}"
+            class="btn btn-outline-dark"
+        >
+            🔄 Compare Again
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
