@@ -289,22 +289,6 @@ The database contains tables for:
 
 ---
 
-# 🔐 Environment Variables
-
-Create a `.env` file in the project root.
-
-Example:
-
-```env
-SECRET_KEY=your-secret-key
-```
-
-Add any additional API keys required by your configuration.
-
-**Never commit your `.env` file to GitHub.**
-
----
-
 # ▶️ Running the Application
 
 Activate the virtual environment:
