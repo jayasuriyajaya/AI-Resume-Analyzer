@@ -472,33 +472,6 @@ Potential future improvements include:
 
 ---
 
-# 📸 Screenshots
-
-Add screenshots of the application here.
-
-Recommended screenshots:
-
-1. Home Page
-2. Login Page
-3. Register Page
-4. Dashboard
-5. Resume Analysis
-6. Job Recommendations
-7. Skill Gap Analysis
-8. Resume History
-9. Resume Comparison
-10. Resume Improvements
-
-Example:
-
-```markdown
-## Dashboard
-
-![Dashboard](static/images/dashboard.png)
-```
-
----
-
 # 🎓 Academic Project
 
 This project can be used as an academic MCA project demonstrating practical implementation of:
